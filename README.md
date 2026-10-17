@@ -1,9 +1,9 @@
 ![Dynamic Dock](docs/branding/dynamic-dock-icon-transparent.png)
 
-# Dynamic Dock
+# Minecraft Dynamic Dock
 
 An animated liquid-glass hotbar for **Minecraft 26.3**, by **pingplus**. Client-only. This feature is part of the Minecraft untitled-client you can see here https://github.com/PingPongPlus/untitled-client
-because the feature is really unique its self i seperated it.
+because the feature is really unique its self so I seperated it. It was inspired by the MacOS dock.
 
 ## Install
 
