@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "dynamicdock",
+  "version": "${version}",
+  "name": "Dynamic Dock",
+  "description": "Animated dock hotbar with customizable liquid glass and vanilla settings.",
+  "authors": ["pingplus"],
+  "icon": "assets/dynamicdock/icon.png",
+  "license": "All-Rights-Reserved",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.dynamicdock.DynamicDockClient"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "dynamicdock.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=25"
+  }
+}

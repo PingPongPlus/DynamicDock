@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.dynamicdock.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "DockHudMixin",
+    "GuiDrawAccessor",
+    "GlassGuiRendererMixin",
+    "ShaderReloadMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

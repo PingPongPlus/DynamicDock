@@ -1,0 +1,79 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.18.1'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "dynamicdock" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+dependencies {
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "loader_version", project.loader_version
+    filteringCharset "UTF-8"
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version,
+                "minecraft_version": project.minecraft_version,
+                "loader_version": project.loader_version
+    }
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    withSourcesJar()
+}
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 25
+}
+
+jar {
+    from("LICENSE.txt") {
+        rename { "${it}_${project.archives_base_name}" }
+    }
+}
+
+// The checks exercise pure config/layout code and need no Minecraft process or test library.
+sourceSets.test.compileClasspath += sourceSets.client.output
+sourceSets.test.runtimeClasspath += sourceSets.client.output
+
+tasks.register('dockChecks', JavaExec) {
+    dependsOn testClasses, clientClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.dynamicdock.DockChecks'
+}
+tasks.named('check') { dependsOn dockChecks }
+
+tasks.named('test') { failOnNoDiscoveredTests = false }
+
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = 'dynamicdock-test'
+        enableGameTests = false
+        enableClientGameTests = true
+    }
+}
